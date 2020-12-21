@@ -16,27 +16,24 @@ class ReadThreadsTest extends TestCase
     /**
      * @var Collection|Model|mixed
      */
-    private $thread;
+    protected $thread;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->thread = Thread::factory()->create();
-
     }
 
     /** @test */
     public function a_user_can_view_all_threads()
     {
-        $this->get('/threads')
-            ->assertSee($this->thread->title);
+        $this->get('/threads')->assertSee($this->thread->title);
     }
 
     /** @test */
     public function a_user_can_read_a_single_thread()
     {
-        $this->get('/threads/'.$this->thread->id)
-            ->assertSee($this->thread->title);
+        $this->get($this->thread->path())->assertSee($this->thread->title);
     }
 
     /** @test */
@@ -44,7 +41,6 @@ class ReadThreadsTest extends TestCase
     {
         $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
 
-        $this->get('/threads/'.$this->thread->id)
-            ->assertSee($reply->body);
+        $this->get($this->thread->path())->assertSee($reply->body);
     }
 }
