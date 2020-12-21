@@ -33,7 +33,7 @@ class ParticipateInForumTest extends TestCase
         $thread = Thread::factory()->create();
 
         // When the user adds a reply to the thread
-        $reply = Reply::factory()->create();
+        $reply = Reply::factory()->make();
         $this->post($thread->path().'/replies', $reply->toArray());
 
         // Then their reply should be visible on the page.

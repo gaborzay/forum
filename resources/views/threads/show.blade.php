@@ -20,4 +20,19 @@
             @endforeach
         </div>
     </div>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if(auth()->check())
+                <form method="POST" action="{{$thread->path() . '/replies'}}">
+                    {{csrf_field()}}
+                    <label for="body">Body:</label>
+                    <textarea name="body" id="body" placeholder="Have something to say?" rows="5"></textarea>
+                    <button type="submit" class="btn btn-default">Post</button>
+                </form>
+            @else
+                <p>Please <a href="{{route('login')}}">sign in</a> to participate in this discussion.</p>
+            @endif
+        </div>
+    </div>
 </x-guest-layout>
