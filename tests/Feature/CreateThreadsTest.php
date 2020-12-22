@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Thread;
-use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -19,6 +18,14 @@ class CreateThreadsTest extends TestCase
         ])->assertUnauthorized();
     }
 
+    /** @test */
+    public function guests_cannot_see_the_create_threads_page()
+    {
+        $this->get('/threads/create')
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
     public function an_authenticated_user_can_create_new_forum_threads()
     {
         $this->signIn();
