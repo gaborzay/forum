@@ -50,6 +50,12 @@ class ThreadController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'channel_id' => 'required|exists:channels,id',
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
         $thread = Thread::query()->create([
             'user_id' => auth()->id(),
             'channel_id' => request('channel_id'),

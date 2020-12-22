@@ -17,10 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string title
  * @property string body
  * @property DateTimeInterface created_at
- * @property DateTimeInterface updated_at
- * @property User creator
- * @property Channel channel
- * @property Collection replies
+ * @property DateTimeInterface updated_at\
  */
 class Thread extends Model
 {

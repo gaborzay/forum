@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string body
  * @property DateTimeInterface created_at
  * @property DateTimeInterface updated_at
- * @property User owner
  */
 class Reply extends Model
 {
