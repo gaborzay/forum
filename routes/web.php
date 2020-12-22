@@ -25,6 +25,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/threads', [ThreadController::class, 'index']);
 Route::get('/threads/{thread}', [ThreadController::class, 'show']);
+Route::post('/threads', [ThreadController::class, 'store']);
 Route::post('/threads/{thread}/replies', [ReplyController::class, 'store']);
 
 require __DIR__.'/auth.php';

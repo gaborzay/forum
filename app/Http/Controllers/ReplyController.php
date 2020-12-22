@@ -7,6 +7,9 @@ use Illuminate\Http\RedirectResponse;
 
 class ReplyController extends Controller
 {
+    /**
+     * ReplyController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');
