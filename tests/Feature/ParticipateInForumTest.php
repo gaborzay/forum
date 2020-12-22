@@ -14,12 +14,11 @@ class ParticipateInForumTest extends TestCase
     /** test */
     public function unauthenticated_users_may_not_add_replies()
     {
-        // And an existing thread
         $thread = create(Thread::class);
 
-        // When the user adds a reply to the thread
-        $response = $this->post($thread->path().'/replies', []);
-        $response->assertUnauthorized();
+        $this->post($thread->path().'/replies', [], [
+            'Accept' => 'application/json'
+        ])->assertUnauthorized();
     }
 
     /** @test */

@@ -18,10 +18,11 @@ class ReplyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param $channelId
      * @param  Thread  $thread
      * @return RedirectResponse
      */
-    public function store(Thread $thread): RedirectResponse
+    public function store($channelId, Thread $thread): RedirectResponse
     {
         $thread->addReply([
             'body' => request('body'),

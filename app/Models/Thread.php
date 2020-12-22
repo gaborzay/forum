@@ -18,7 +18,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string body
  * @property DateTimeInterface created_at
  * @property DateTimeInterface updated_at
- * @property Collection $replies
+ * @property User creator
+ * @property Channel channel
+ * @property Collection replies
  */
 class Thread extends Model
 {
@@ -31,15 +33,7 @@ class Thread extends Model
      */
     public function path(): string
     {
-        return '/threads/'.$this->id;
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function replies(): HasMany
-    {
-        return $this->hasMany(Reply::class, 'thread_id');
+        return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
     /**
@@ -48,6 +42,22 @@ class Thread extends Model
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(Channel::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Reply::class, 'thread_id');
     }
 
     /**
