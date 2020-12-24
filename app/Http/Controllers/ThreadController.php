@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use function GuzzleHttp\Psr7\uri_for;
 
 class ThreadController extends Controller
 {
@@ -24,17 +26,25 @@ class ThreadController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Channel|null  $channel
+     * @param  Channel  $channel
      * @return Application|Factory|View
      */
-    public function index(Channel $channel = null)
+    public function index(Channel $channel)
     {
         if ($channel && $channel->exists) {
-            $threads = $channel->threads()->latest()->get();
+            $threads = $channel->threads()->latest();
         } else {
-            $threads = Thread::query()->latest()->get();
+            $threads = Thread::query()->latest();
         }
 
+        // if request('by), we should filter by the given username
+        if ($username = request('by')) {
+            $user = User::where('name', $username)->firstOrFail();
+            $threads->where('user_id', $user->id);
+        }
+
+        $threads = $threads->get();
+        
         return view('threads.index', compact('threads'));
     }
 

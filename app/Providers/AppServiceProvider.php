@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('channels', Channel::all());
         });
 
-//        todo not sure why this doesn't work
+//        This would run before tests (DatabaseMigrations), so it doesn't work
 //        View::share('channels', Channel::all());
     }
 
