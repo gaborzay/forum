@@ -23,12 +23,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('threads', [ThreadController::class, 'index']);
-Route::get('threads/create', [ThreadController::class, 'create']);
-Route::get('threads/{channel}', [ThreadController::class, 'index']);
-Route::post('threads', [ThreadController::class, 'store']);
-Route::get('threads/{channel}/{thread}', [ThreadController::class, 'show']);
-Route::post('threads/{channel}/{thread}/replies', [ReplyController::class, 'store']);
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('threads', [ThreadController::class, 'index'])->name('threads');
+    Route::get('threads/create', [ThreadController::class, 'create'])->name('threads-create');
+    Route::post('threads', [ThreadController::class, 'store']);
+    Route::get('threads/{channel}', [ThreadController::class, 'index']);
+    Route::get('threads/{channel}/{thread}', [ThreadController::class, 'show']);
+    Route::post('threads/{channel}/{thread}/replies', [ReplyController::class, 'store']);
+});
 
 require __DIR__.'/auth.php';
